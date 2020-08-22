@@ -8,6 +8,7 @@ import (
 )
 
 func hproxy()
+func hproxy2()
 
 func buildToInternal(b []byte, out interface{}, build func([]byte) func()) {
 	v := reflect.ValueOf(out)
@@ -45,3 +46,16 @@ func HBuild(b []byte) func() {
 
 	return *(*func())(unsafe.Pointer(&fn))
 }
+
+func addrOfFunc(f interface{}) uintptr {
+	if reflect.TypeOf(f).Kind() != reflect.Func {
+		panic("CallFunc: Can't call non-func")
+	}
+	ival := *(*struct {
+		typ uintptr
+		fun uintptr
+	})(unsafe.Pointer(&f))
+	return ival.fun
+}
+
+// https://www.felixcloutier.com/x86/jmp

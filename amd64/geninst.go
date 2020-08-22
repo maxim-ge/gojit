@@ -214,6 +214,12 @@ func (a *Assembler) JmpRel(dst uintptr) {
 	a.rel32(dst)
 }
 
+// https://defuse.ca/online-x86-assembler.htm#disassembly
+func (a *Assembler) JmpRax() {
+	a.byte(0xff)
+	a.byte(0xe0)
+}
+
 func (a *Assembler) JccShort(cc byte, off int8) {
 	a.byte(0x70 | cc)
 	a.byte(byte(off))
