@@ -70,6 +70,19 @@ func (a *Assembler) int32(i uint32) {
 	a.Off += 4
 }
 
+// Int64 s.e.
+func (a *Assembler) Int64(off int, i uint64) {
+	a.Buf[off] = byte(i & 0xFF)
+	a.Buf[off+1] = byte(i >> 8)
+	a.Buf[off+2] = byte(i >> 16)
+	a.Buf[off+3] = byte(i >> 24)
+	a.Buf[off+4] = byte(i >> 32)
+	a.Buf[off+5] = byte(i >> 40)
+	a.Buf[off+6] = byte(i >> 48)
+	a.Buf[off+7] = byte(i >> 56)
+	a.Off += 8
+}
+
 func (a *Assembler) int64(i uint64) {
 	a.Buf[a.Off] = byte(i & 0xFF)
 	a.Buf[a.Off+1] = byte(i >> 8)
