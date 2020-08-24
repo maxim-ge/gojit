@@ -1,4 +1,4 @@
-//+build linux
+//+build windows
 
 #include "funcdata.h"
 #include "textflag.h"
@@ -11,7 +11,7 @@ TEXT ·cgocall(SB),NOSPLIT,$16
         MOVQ AX, 8(SP)
         MOVQ 8(DX), AX
         MOVQ AX, 0(SP)
-//        CALL runtime·cgocall(SB)
+        CALL runtime·cgocall(SB)
         RET
 
 TEXT ·jitcall(SB),NOSPLIT,$0

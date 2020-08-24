@@ -5,12 +5,14 @@ package gojit
 
 import (
 	"github.com/edsrzf/mmap-go"
-	_ "github.com/nelhage/gojit/cgo"
+	"github.com/nelhage/gojit/cgo"
 	"reflect"
 	"unsafe"
 )
 
 type ABI int
+
+var dum = cgo.DummyF()
 
 // Alloc returns a byte slice of the specified length that is marked
 // RWX -- i.e. the memory in it can be both written and executed. This

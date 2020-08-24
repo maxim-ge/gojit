@@ -1,53 +1,14 @@
-package hproxy
+package main
 
 import (
 	"fmt"
 	"reflect"
-	"testing"
 	"unsafe"
-
 	"github.com/nelhage/gojit/amd64"
-	"github.com/stretchr/testify/require"
+	"github.com/nelhage/gojit"
 )
 
-func Test_gojit_proxy_reti32(t *testing.T) {
-	asm := newAsmGoABI()
-
-	var jitf func() int32
-	// return 10
-	{
-		asm.Mov(amd64.Imm{Val: 10}, amd64.Indirect{Base: amd64.Rsp, Offset: 0x8, Bits: 32})
-		asm.Ret()
-		buildToInternal(asm.Buf, &jitf, HBuild)
-	}
-
-	require.Equal(t, int32(10), jitf())
-}
-
-//go:noinline
-func gofnpanic() {
-	fmt.Println("*** sgofnpanic")
-	panic(1)
-}
-
-func sgofn() {
-	fmt.Println("*** sgofn")
-}
-
-func Test_gojit_proxy_panic(t *testing.T) {
-	asm := newAsmGoABI()
-	var jitf func()
-	// call gofn
-	{
-		asm.MovAbs(uint64(reflect.ValueOf(gofnpanic).Pointer()), amd64.Rax)
-		asm.JmpRax()
-		asm.BuildTo(&jitf)
-	}
-
-	jitf()
-}
-
-func Test_gojit_proxy_call(t *testing.T) {
+func main() {
 	asm := newAsmGoABI()
 
 	f := reflect.ValueOf(sgofn).Pointer()
@@ -66,7 +27,6 @@ func Test_gojit_proxy_call(t *testing.T) {
 			sp    hproxy2
 			sp+8  jitf
 		*/
-
 		asm.Sub(amd64.Imm{Val: 0x10}, amd64.Rsp)
 
 		// *sp = addrHproxy2
@@ -93,4 +53,19 @@ func Test_gojit_proxy_call(t *testing.T) {
 	}
 
 	jitf()
+}
+
+func hproxy()
+func hproxy2()
+
+func sgofn() {
+	fmt.Println("*** sgofn")
+}
+
+func newAsmGoABI() *amd64.Assembler {
+	buf, e := gojit.Alloc(gojit.PageSize)
+	if e != nil {
+		panic(e)
+	}
+	return &amd64.Assembler{Buf: buf, Off: 0, ABI: amd64.GoABI}
 }
