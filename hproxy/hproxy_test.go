@@ -10,6 +10,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func Test_gojit_proxy_get_runtime_morestack_noctxt(t *testing.T){
+
+	fmt.Println("get_runtime_morestack_noctxt", get_runtime_morestack_noctxt())
+}
+
+
+
 func Test_gojit_proxy_reti32(t *testing.T) {
 	asm := newAsmGoABI()
 

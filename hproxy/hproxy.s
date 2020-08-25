@@ -9,3 +9,8 @@ TEXT ·hproxy(SB),NOSPLIT,$0
 
 TEXT ·hproxy2(SB),NOSPLIT,$0
         RET
+
+TEXT ·get_runtime_morestack_noctxt(SB),0,$0-8
+        LEAQ runtime·morestack_noctxt(SB), AX
+        MOVQ AX, rv+0(FP)
+        RET

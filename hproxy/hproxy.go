@@ -9,6 +9,7 @@ import (
 
 func hproxy()
 func hproxy2()
+func get_runtime_morestack_noctxt() uintptr
 
 func buildToInternal(b []byte, out interface{}, build func([]byte) func()) {
 	v := reflect.ValueOf(out)
