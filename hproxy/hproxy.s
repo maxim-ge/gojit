@@ -12,14 +12,14 @@ TEXT ·callgofunc(SB),NOSPLIT,$0
 	CALL AX
         RET
 
-TEXT ·callgofunc2(SB),$0
+TEXT ·callgofunc2(SB),NOSPLIT|NOFRAME,$0
         MOVQ ptr+0(FP), AX
-	SUBQ 10, SP
+	SUBQ 0x8, SP
 	CALL AX
-	ADDQ 10, SP
+	ADDQ 0x8, SP
         RET
 
-TEXT ·callgofunc3(SB), NOSPLIT, $0
+TEXT ·callgofunc3(SB), $0
 	SUBQ 0x8, SP
 	MOVQ BP, (SP)
 	LEAQ (SP), BP

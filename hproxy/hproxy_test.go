@@ -28,8 +28,14 @@ func Test_callgofunc2_panic(t *testing.T){
 	callgofunc2(uintptr(reflect.ValueOf(gofnpanic).Pointer()))
 }
 
+func Test_callgofunc2_nopanic(t *testing.T){
+	a := uintptr(reflect.ValueOf(sgofn).Pointer())
+	callgofunc2(a)
+}
+
 func Test_callgofunc3_panic(t *testing.T){
-	callgofunc3(uintptr(reflect.ValueOf(gofnpanic).Pointer()))
+	a := uintptr(reflect.ValueOf(gofnpanic).Pointer())
+	callgofunc3(a)
 }
 
 func Test_callgofunc3_nopanic(t *testing.T){
