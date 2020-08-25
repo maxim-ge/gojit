@@ -6,6 +6,7 @@ import (
 	"unsafe"
 	"github.com/nelhage/gojit/amd64"
 	"github.com/nelhage/gojit"
+	"github.com/nelhage/gojit/hproxy/ccall"
 )
 
 func main() {
@@ -53,10 +54,15 @@ func main() {
 	}
 
 	jitf()
+	ccall.Cf()
+	cgocall()
 }
 
+func cgocall()
 func hproxy()
 func hproxy2()
+
+var dummy = cgocall
 
 func sgofn() {
 	fmt.Println("*** sgofn")
