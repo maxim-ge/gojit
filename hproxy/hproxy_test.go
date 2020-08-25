@@ -10,9 +10,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_gojit_proxy_get_runtime_morestack_noctxt(t *testing.T){
+func Test_gojit_proxy_get_runtime(t *testing.T){
 
 	fmt.Println("get_runtime_morestack_noctxt", get_runtime_morestack_noctxt())
+//	fmt.Println("get_runtime_cgocall", get_runtime_cgocall())
 }
 
 
