@@ -10,9 +10,12 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-
 func Test_callgofuncgo(t *testing.T){
 	callgofuncgo(sgofn)
+}
+
+func Test_callhargs(t *testing.T){
+	callhargs(1, 2)
 }
 
 
